@@ -2,8 +2,9 @@
 appengine-generated/
 
 # Firebase
-firebase.json
 .firebaserc
+firebase-debug.log
 
 # Own
 public/old/
+public/js/firebase.js

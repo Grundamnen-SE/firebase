@@ -1,4 +1,4 @@
-database.ref("elements").once("value").then(function(data){
+db.ref("elements").once("value").then(function(data){
   var playbtn = data.val();
   for (var key in playbtn) {
     if (!playbtn.hasOwnProperty(key)) continue;

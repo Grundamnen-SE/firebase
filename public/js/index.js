@@ -3,18 +3,6 @@ var elementLoaded = [];
 var loadElementData;
 var title = "Grundämnen.se";
 
-var elements = ["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si",
-                "P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni",
-                "Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb",
-                "Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe",
-                "Cs","Ba","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb",
-                "Bi","Po","At","Rn","Fr","Ra","Rf","Db","Sg","Bh","Hs","Mt","Ds",
-                "Rg","Cn","Uut","Fl","Uup","Lv","Uus","Uuo","La","Ce","Pr","Nd",
-                "Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Ac","Th",
-                "Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr"];
-
-var database = firebase.database();
-
 function dataExtractor(data, key) {
   //console.log(key, data);
   if (typeof data === "object" && data.constructor !== Array) {
@@ -39,10 +27,6 @@ function dataExtractor(data, key) {
     }
     elementLoaded.push(key);
   }
-}
-
-function isInArray(value, array) {
-  return array.indexOf(value) > -1;
 }
 
 function loadElement(elm, override) {
@@ -78,14 +62,19 @@ function loadElement(elm, override) {
           }
         }
 
-        database.ref("elements/"+elm).once("value").then(function(data){
+        db.ref("elements/"+elm).once("value").then(function(data){
           data = data.val();
           console.log(data);
           // TODO: Redo when the new logging system is implemented
-          if ((data.text == null && data.approved) || (data.approved)) data.text = "Detta ämne är inte klart ännu.";
+          if (data == null) {
+            data = {};
+            data.text = "Ämnet kunde inte hittas. Troligen är det inte klart ännu.";
+            data.element = "";
+          }
+          if ((data.text == null) || (!data.approved)) data.text = "Detta ämne är inte klart ännu.";
           loadElementData = data;
           var elementdata = data;
-          window.history.pushState("", "", "/"+elementdata.element);
+          window.history.pushState("", "", "/"+data.element);
           $("title").text(elementdata.element+" - "+title);
           for (var key in elementdata) {
             if (!elementdata.hasOwnProperty(key)) continue;

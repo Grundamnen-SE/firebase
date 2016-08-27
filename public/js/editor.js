@@ -151,5 +151,43 @@ function isInArray(value, array) {
 }
 
 function save() {
-  
+
+}
+
+function loadElementEditor(element) {
+  db.ref("elements/"+element).once("value").then(function(data){
+    var data = data.val();
+    for (var key in data) {
+      if (!data.hasOwnProperty(key)) continue;
+      var obj = data[key];
+      dataExtractor(obj, key);
+    }
+  });
+}
+
+function saveElementEditor() {
+  var data = {};
+  $("[data-elm]").each(function(){
+    var key = $(this).attr("data-elm");
+    if (key.indexOf(".") === -1) {
+      if ($(this).is("input,textarea")) {
+        data[key] = $(this).val();
+      } else if ($(this).find("input")) {
+        data[key] = $(this).find("input").val();
+      } else if ($(this).find("textarea")) {
+        data[key] = $(this).find("textarea").val();
+      }
+    } else {
+      var key = key.split(".");
+      if (!data[key[0]]) data[key[0]] = {};
+      if ($(this).is("input,textarea")) {
+        data[key[0]][key[1]] = $(this).val();
+      } else if ($(this).find("input")) {
+        data[key[0]][key[1]] = $(this).find("input").val();
+      } else if ($(this).find("textarea")) {
+        data[key[0]][key[1]] = $(this).find("textarea").val();
+      }
+    }
+  });
+  return data;
 }

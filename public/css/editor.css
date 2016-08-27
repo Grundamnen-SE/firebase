@@ -57,7 +57,10 @@ body, html {
   min-width: 100%;
   max-width: 100%;
 }
-#editing-area button {
+#editing-section input {
+  padding: 5px;
+}
+#editing-section button {
   padding: 10px;
   font-size: 30px;
 }

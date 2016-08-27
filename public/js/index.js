@@ -81,13 +81,8 @@ function loadElement(elm, override) {
         database.ref("elements/"+elm).once("value").then(function(data){
           data = data.val();
           console.log(data);
-          if (data == null) {
-            // Show incomplete element thingy
-            //alert("Element incomplete");
-            console.log("Element incomplete");
-            loading = false;
-            return;
-          }
+          // TODO: Redo when the new logging system is implemented
+          if ((data.text == null && data.approved) || (data.approved)) data.text = "Detta ämne är inte klart ännu.";
           loadElementData = data;
           var elementdata = data;
           window.history.pushState("", "", "/"+elementdata.element);

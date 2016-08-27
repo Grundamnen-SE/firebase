@@ -1,0 +1,42 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #363636;
+}
+.container {
+  width: 90%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #222222;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  color: white;
+  padding: 10px;
+}
+.login-with {
+  color: #408EE2;
+  font-size: 20px;
+  cursor: pointer;
+}
+.login-with:hover {
+  color: #396ECE;
+}
+.header {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.header span {
+  font-size: 16px;
+}
+#notification {
+  padding: 10px;
+  border: 1px solid gray;
+  background-color: black;
+  position: fixed;
+  bottom: 50px;
+  left: 30%;
+  right: 30%;
+  overflow: hidden;
+  color: white;
+}

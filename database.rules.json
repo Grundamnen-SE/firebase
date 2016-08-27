@@ -1,6 +1,12 @@
 {
   "rules": {
-    ".read": true,
-    ".write": "root.child('permissions').child(auth.uid).child('write').val() == true"
+    "elements": {
+      ".read":   true,
+      ".write": "root.child('permissions').child(auth.uid).child('write').val() == true"
+    },
+    "permissions": {
+      ".read":  "root.child('permissions').child(auth.uid).child('superadmin').val() == true",
+      ".write": "root.child('permissions').child(auth.uid).child('superadmin').val() == true"
+    }
   }
 }

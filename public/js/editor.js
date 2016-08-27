@@ -10,50 +10,27 @@ var elements = ["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si",
                 "Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Ac","Th",
                 "Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr"].sort();
 
-function dataExtractor(obj, key) {
-  console.log(key, obj);
-  if (typeof obj === "object" && obj.constructor !== Array) {
-    for (var intkey in obj) {
-      if (!obj.hasOwnProperty(intkey)) continue;
-      var intobj = obj[intkey];
-      console.log(intkey, intobj)
-      if (intobj.constructor === Array) {
-        for (var i = 0; i < intobj.length; i++) {
-          $('[data-elm="'+key+"."+intkey+'"]').append("<li>"+intobj[i]+"</li>");
-        }
-      } else {
-        dataExtractor(intobj);
-      }
-      elementLoaded.push(key+"."+intkey);
+function dataExtractor(data, key) {
+  console.log(key, data);
+  if (typeof data === "object" && data.constructor !== Array) {
+    for (var newkey in data) {
+      if (!data.hasOwnProperty(newkey)) return;
+      dataExtractor(data[newkey], key+"."+newkey);
     }
-  } else if (obj.constructor === Array) {
-    for (var i = 0; i < obj.length; i++) {
-      if (typeof obj[i] === "object") {
-        for (var intkey in obj[i]) {
-          if (!obj[i].hasOwnProperty(intkey)) continue;
-          var intobj = obj[i][intkey];
-          $('[data-elm="'+key+"."+intkey+'"]').append("<li>"+intobj+"</li>")
-        }
-      } else {
-        $('[data-elm="'+key+'"]').append("<li>"+obj[i]+"</li>");
-      }
+  } else if (data.constructor === Array) {
+    for (var i = 0; i < data.length; i++) {
+      $("[data-elm='"+key+"']").append("<li>"+data[i]+"</li>");
     }
-    elementLoaded.push(key);
   } else {
-    if ($('[data-elm="'+key+'"]').attr("data-elm-attr") == "markdown") {
-      $('[data-elm="'+key+'"]').attr("data-elm-raw", obj.toString());
-      obj = md.render(obj.toString());
-      $('[data-elm="'+key+'"]').append(obj);
+    if ($("[data-elm='"+key+"']").is("input")) {
+      $("[data-elm='"+key+"']").val(data);
+    } else if ($("[data-elm='"+key+"']").is("textarea")) {
+      $("[data-elm='"+key+"']").text(data);
     } else if ($('[data-elm="'+key+'"]').attr("data-elm-attr") == "attribute") {
-      $('[data-elm="'+key+'"]').attr("data-elm-raw", obj.toString());
-    } else if ($('[data-elm="'+key+'"]').is("input")) {
-      $('[data-elm="'+key+'"]').attr("value", obj.toString());
-    } else if ($('[data-elm="'+key+'"]').is("textarea")) {
-      $('[data-elm="'+key+'"]').text(obj.toString());
+      $('[data-elm="'+key+'"]').attr("data-elm-raw", data);
     } else {
-      $('[data-elm="'+key+'"]').append(obj);
+      $("[data-elm='"+key+"']").text(data);
     }
-    elementLoaded.push(key);
   }
 }
 
@@ -114,7 +91,11 @@ function logout() {
 }
 
 // Editor
+var editorLoaded = false;
+
 function loadEditor() {
+  if (editorLoaded === true) return;
+  editorLoaded = true;
   $("#editor").show();
   $("#login").hide();
   $("#editing-area").hide();
@@ -127,6 +108,8 @@ function loadEditor() {
 }
 
 function unloadEditor() {
+  if (editorLoaded === false) return;
+  editorLoaded = false;
   $("#editor").hide();
   $("#login").show();
   $("#editing-area").hide();
@@ -139,11 +122,7 @@ function notify(message) {
 
 $("#element").on("change", function(e){
   $("#editing-area").show();
-  db.ref("elements/"+$(this).val()).once("value").then(function(data){
-    if (data) {
-
-    }
-  });
+  loadElementEditor($(this).val());
 });
 
 function isInArray(value, array) {
@@ -151,12 +130,22 @@ function isInArray(value, array) {
 }
 
 function save() {
-
+  var data = saveElementEditor();
+  data.element = $("#element").val();
+  data.number = data.elementdata.protons;
+  db.ref("elements/"+data.element).once("value").then(function(va){
+    va = va.val();
+    data.approved = false;
+    if (va) data.previous = va; else data.previous = {};
+    console.log(data);
+    db.ref("elements/"+data.element).set(data);
+  });
 }
 
 function loadElementEditor(element) {
   db.ref("elements/"+element).once("value").then(function(data){
     var data = data.val();
+    console.log(data);
     for (var key in data) {
       if (!data.hasOwnProperty(key)) continue;
       var obj = data[key];

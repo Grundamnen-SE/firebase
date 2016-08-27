@@ -15,44 +15,27 @@ var elements = ["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si",
 
 var database = firebase.database();
 
-function dataExtractor(obj, key) {
-  console.log(key, obj);
-  if (typeof obj === "object" && obj.constructor !== Array) {
-    for (var intkey in obj) {
-      if (!obj.hasOwnProperty(intkey)) continue;
-      var intobj = obj[intkey];
-      console.log(intkey, intobj)
-      if (intobj.constructor === Array) {
-        for (var i = 0; i < intobj.length; i++) {
-          $('[data-elm="'+key+"."+intkey+'"]').append("<li>"+intobj[i]+"</li>");
-        }
-      } else {
-        dataExtractor(intobj);
-      }
-      elementLoaded.push(key+"."+intkey);
+function dataExtractor(data, key) {
+  //console.log(key, data);
+  if (typeof data === "object" && data.constructor !== Array) {
+    for (var newkey in data) {
+      if (!data.hasOwnProperty(newkey)) return;
+      dataExtractor(data[newkey], key+"."+newkey);
     }
-  } else if (obj.constructor === Array) {
-    for (var i = 0; i < obj.length; i++) {
-      if (typeof obj[i] === "object") {
-        for (var intkey in obj[i]) {
-          if (!obj[i].hasOwnProperty(intkey)) continue;
-          var intobj = obj[i][intkey];
-          $('[data-elm="'+key+"."+intkey+'"]').append("<li>"+intobj+"</li>")
-        }
-      } else {
-        $('[data-elm="'+key+'"]').append("<li>"+obj[i]+"</li>");
-      }
+  } else if (data.constructor === Array) {
+    for (var i = 0; i < data.length; i++) {
+      $("[data-elm='"+key+"']").append("<li>"+data[i]+"</li>");
     }
     elementLoaded.push(key);
   } else {
-    if ($('[data-elm="'+key+'"]').attr("data-elm-attr") == "markdown") {
-      $('[data-elm="'+key+'"]').attr("data-elm-raw", obj.toString());
-      obj = md.render(obj.toString());
-      $('[data-elm="'+key+'"]').append(obj);
+    if ($("[data-elm='"+key+"']").is("input")) {
+      $("[data-elm='"+key+"']").val(data);
+    } else if ($("[data-elm='"+key+"']").is("textarea")) {
+      $("[data-elm='"+key+"']").text(data);
     } else if ($('[data-elm="'+key+'"]').attr("data-elm-attr") == "attribute") {
-      $('[data-elm="'+key+'"]').attr("data-elm-raw", obj.toString());
+      $('[data-elm="'+key+'"]').attr("data-elm-raw", data);
     } else {
-      $('[data-elm="'+key+'"]').append(obj);
+      $("[data-elm='"+key+"']").text(data);
     }
     elementLoaded.push(key);
   }
@@ -128,6 +111,21 @@ function loadElement(elm, override) {
 }
 
 $(document).on('ready', function(e){
+  $(".tab1 td").each(function(i,o){
+  if (!$(this).hasClass("td-extend") &&
+      !$(this).hasClass("td-header") &&
+      !$(this).hasClass("td-none") &&
+      !$(this).hasClass("td-about") &&
+      !$(this).hasClass("td-logo")) {
+
+      var nr = $(this).find(".atomic_number").text();
+      var name = $(this).find(".atomic_text").text();
+      $(this).attr("data-number", nr);
+      $(this).attr("data-name", name);
+      $(this).attr("data-iselm", "true");
+    }
+  });
+
   if (window.location.href.split("/")[3] !== "") {
     loadElement(window.location.href.split("/")[3]);
   }

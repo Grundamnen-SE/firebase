@@ -21,7 +21,19 @@
     <link rel="stylesheet" type="text/css" href="/css/admin.css">
   </head>
   <body>
-    <div class="container">
+    <div id="admin" class="container disnon">
+    </div>
+    <div id="login" class="container disnon">
+      <h3>Authentication Required</h3>
+      <br>
+      <input type="text" id="username" placeholder="Användarnamn">
+      <br>
+      <input type="password" id="password" placeholder="Lösenord">
+      <br><br>
+      <button type="button" onclick="loginCustom($('#username').val(), $('#password').val());">Logga in</button>
+      <hr>
+      <a onclick="loginGoogle();" class="login-with">Login with Google</a><br>
+      <a onclick="loginFacebook();" class="login-with">Login with Facebook</a><br>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>

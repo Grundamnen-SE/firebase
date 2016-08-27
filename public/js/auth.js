@@ -41,7 +41,7 @@ function login(provider) {
 
 function logout() {
   auth.signOut().then(function(){
-    unloadEditor();
+    // Logout successful
   }, function(error){
     // Error signing out
   });

@@ -1,11 +1,21 @@
 auth.onAuthStateChanged(function(user) {
   if (user) {
-    window.user = user;
-    loadEditor();
-    console.log("onAuthStateChanged", user);
+    db.ref("permissions/"+user.uid+"/write").once("value").then(function(data){
+      if (data.val()) {
+        window.user = user;
+        loadEditor();
+      } else {
+        logout();
+        unloadEditor();
+        notify("Du har inte behörighet att ändra ämnen.");
+      }
+    }, function(err){
+      console.log(err);
+    });
   } else {
     unloadEditor();
   }
+  console.log("onAuthStateChanged", user);
 });
 
 // Editor
@@ -26,7 +36,6 @@ function loadEditor() {
 }
 
 function unloadEditor() {
-  if (editorLoaded === false) return;
   editorLoaded = false;
   $("#editor").hide();
   $("#login").show();
@@ -49,6 +58,7 @@ function save() {
     if (va) data.previous = va; else data.previous = {};
     console.log(data);
     db.ref("elements/"+data.element).set(data);
+    notify("Ämnet har sparats.");
   });
 }
 

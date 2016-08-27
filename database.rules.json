@@ -5,7 +5,7 @@
       ".write": "root.child('permissions').child(auth.uid).child('write').val() == true"
     },
     "permissions": {
-      ".read":  "root.child('permissions').child(auth.uid).child('superadmin').val() == true",
+      ".read":  "auth != null",
       ".write": "root.child('permissions').child(auth.uid).child('superadmin').val() == true"
     }
   }

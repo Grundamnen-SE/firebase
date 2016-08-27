@@ -40,3 +40,58 @@ body, html {
   overflow: hidden;
   color: white;
 }
+#element {
+  padding: 1px 5px 1px 5px;
+}
+#choose-element {
+
+}
+#choose-element h3 {
+  padding-left: 25px;
+}
+#editing-section {
+  width: 63%;
+  float: left;
+}
+#editing-section textarea {
+  min-width: 100%;
+  max-width: 100%;
+}
+#editing-area button {
+  padding: 10px;
+  font-size: 30px;
+}
+#elementdata-section {
+  width: 20%;
+  float: right;
+}
+#elementdata-section table {
+  width:100%;
+  padding:10px;
+  padding-top:5px;
+  padding-bottom:5px;
+  font-size:20px;
+  border:0;
+  cursor: default;
+  border:1px solid black;
+}
+#elementdata-section table tr td {
+  padding-top:7px;
+  font-size:20px;
+}
+#elementdata-section table tr td input {
+  width: 100%;
+}
+#elementdata-section table tr:first-of-type td {
+  padding-top:3px;
+}
+#elementdata-section table tr:last-of-type td {
+  border-bottom:0px;
+  padding:0;
+}
+#elementdata-section table tr td.line {
+  border-bottom:1px solid black;
+}
+#editing-section p {
+  width:100%;
+}

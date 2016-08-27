@@ -23,19 +23,110 @@
   <body>
     <div id="notification" class="disnon"></div>
     <div id="editor" class="container disnon">
-      <h1 class="header">Redigera ämnen <span class="right">Identifierad som <span id="name"></span> <a onclick="logout();" class="login-with">Logga ut</a></span></h1>
+      <h1 class="header">Redigera grundämnen <span class="right">Identifierad som <span id="name"></span> <a onclick="logout();" class="login-with">Logga ut</a></span></h1>
       <br class="clearfix">
+      <hr>
+      <div id="choose-element">
+        <h3>Välj grundämnen:
+          <select id="element">
+            <option disabled selected>---</option>
+          </select>
+        </h3>
+      </div>
+      <hr>
+      <div id="editing-area">
+        <div id="editing-section">
+          <textarea id="text" rows="10"></textarea>
+          <br>
+          <button type="button" onclick="save();">Spara</button>
+        </div>
+        <div id="elementdata-section">
+          <table>
+            <tbody>
+              <tr>
+                <td>Period</td>
+                <td data-elm="elementdata.period"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Grupp</td>
+                <td data-elm="elementdata.group"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Atomnummer</td>
+                <td data-elm="elementdata.atomnumber"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Atomvikt</td>
+                <td data-elm="elementdata.atomweight"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Protoner</td>
+                <td data-elm="elementdata.protons"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Elektroner</td>
+                <td data-elm="elementdata.electrons"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Neutroner</td>
+                <td data-elm="elementdata.neutron"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Elektronskal</td>
+                <td data-elm="elementdata.electronshells"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Smältpunkt</td>
+                <td data-elm="elementdata.meltingpoint"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+              <tr>
+                <td>Kokpunkt</td>
+                <td data-elm="elementdata.boilingpoint"><input type="number"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="line"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br class="clearfix">
+      </div>
     </div>
     <div id="login" class="container disnon">
       <h3>Authentication Required</h3>
       <br>
-      <form method="post" onsubmit="loginCustom($('#username').val(), $('#password').val());">
-        <input type="text" id="username" placeholder="Användarnamn">
-        <br>
-        <input type="password" id="password" placeholder="Lösenord">
-        <br><br>
-        <button type="button" onclick="loginCustom($('#username').val(), $('#password').val());">Logga in</button>
-      </form>
+      <input type="text" id="username" placeholder="Användarnamn">
+      <br>
+      <input type="password" id="password" placeholder="Lösenord">
+      <br><br>
+      <button type="button" onclick="loginCustom($('#username').val(), $('#password').val());">Logga in</button>
       <hr>
       <a onclick="loginGoogle();" class="login-with">Login with Google</a><br>
       <a onclick="loginFacebook();" class="login-with">Login with Facebook</a><br>

@@ -21,7 +21,7 @@ $(document).on("ready", function(){
     for (var key in playbtn) {
       if (!playbtn.hasOwnProperty(key)) continue;
       var obj = playbtn[key];
-      $('td[data-name="'+obj.element+'"]').find(".atomic_number").after('<img class="yt" src="/img/play.svg">');
+      if (obj.playbtn) $('td[data-name="'+obj.element+'"]').find(".atomic_number").after('<img class="yt" src="/img/play.svg">');
     }
   });
 });

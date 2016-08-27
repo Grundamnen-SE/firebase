@@ -146,39 +146,10 @@ $("#element").on("change", function(e){
   });
 });
 
+function isInArray(value, array) {
+  return array.indexOf(value) > -1;
+}
+
 function save() {
-  var element = $("#element").val();
-  db.ref("elements/"+element).once("value").then(function(old){
-    var versions = old.versions;
-    delete old.versions;
-    versions.push(old);
-    var data = {
-      element: element,
-      name: $("#element-name").val(),
-      text: $("#text").val(),
-      playbtn: $("#vidlink").val() ? true:false,
-      playbtn_link: $("#vidlink").val(),
-      approved: false,
-      approvedby: null,
-      approvedtime: null,
-      lasteditedby: user.email,
-      lasteditedtime: new Date().now(),
-      versions: [],
-      alleditors: []
-    };
-    //db.ref("elements/"+data.element).set(data);
-    var elementdata = {
-      period: $("[data-elm='elementdata.period'] input").val(),
-      group: $("[data-elm='elementdata.group'] input").val(),
-      atomnumber: $("[data-elm='elementdata.atomnumber'] input").val(),
-      atomweight: $("[data-elm='elementdata.atomweight'] input").val(),
-      protons: $("[data-elm='elementdata.protons'] input").val(),
-      electrons: $("[data-elm='elementdata.electrons'] input").val(),
-      neutron: $("[data-elm='elementdata.neutron'] input").val(),
-      electronshells: $("[data-elm='elementdata.electronshells'] input").val(),
-      meltingpoint: $("[data-elm='elementdata.meltingpoint'] input").val(),
-      boilingpoint: $("[data-elm='elementdata.boilingpoint'] input").val()
-    };
-    //db.ref("elements/"+data.element+"/elementdata").set(elementdata);
-  });
+  
 }

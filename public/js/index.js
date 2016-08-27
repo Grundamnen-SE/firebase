@@ -45,7 +45,7 @@ function loadElement(elm, override) {
 
         if (!isInArray(elm, elements)) {
           // Notify user of invalid element
-          alert("element is not valid");
+          notify("Det du klicka på är inte ett ämne.");
           loading = false;
           return;
         }
@@ -115,7 +115,7 @@ $(document).on('ready', function(e){
   }
 
   $("td").on("click", function(e) {
-    if ($(this).attr("data-iselm") === "true" && $(this).attr("data-name") !== null && $(this).attr("data-name") !== "") {
+    if ($(this).attr("data-iselm") === "true" && $(this).attr("data-name") !== null && $(this).attr("data-name") !== "" && $(this).attr("id") !== "about-link") {
       loadElement($(this).attr("data-name"));
     }
   });

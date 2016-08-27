@@ -6,12 +6,20 @@
     "public": "public",
     "rewrites": [
       {
-        "source": "/*",
-        "destination": "/index.html"
+        "source": "/om",
+        "destination": "/om.html"
+      },
+      {
+        "source": "/info",
+        "destination": "/info.html"
       },
       {
         "source": "/editor",
         "destination": "/editor.html"
+      },
+      {
+        "source": "/*",
+        "destination": "/index.html"
       }
     ]
   }

@@ -45,3 +45,15 @@ a[href] {
   color: white;
   padding: 10px;
 }
+#notification {
+  padding: 10px;
+  border: 1px solid gray;
+  background-color: black;
+  position: fixed;
+  bottom: 50px;
+  left: 30%;
+  right: 30%;
+  overflow: hidden;
+  color: white;
+  z-index: 10000;
+}

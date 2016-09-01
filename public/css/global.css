@@ -50,7 +50,7 @@ a[href] {
   border: 1px solid gray;
   background-color: black;
   position: fixed;
-  bottom: 50px;
+  top: 50px;
   left: 30%;
   right: 30%;
   overflow: hidden;

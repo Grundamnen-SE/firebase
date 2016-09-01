@@ -30,7 +30,7 @@ function dataExtractor(data, key) {
 }
 
 function loadElement(elm, override) {
-  console.log("loadElement");
+  console.log("Loading element: ", elm, override?"true":"");
   var jselm = $('td[data-iselm][data-name="'+elm+'"]');
   if (!$(jselm).hasClass("td-extend") &&
       !$(jselm).hasClass("td-header") &&
@@ -64,7 +64,7 @@ function loadElement(elm, override) {
 
         db.ref("elements/"+elm).once("value").then(function(data){
           data = data.val();
-          console.log(data);
+          //console.log(data);
           // TODO: Redo when the new logging system is implemented
           if (data == null) {
             data = {};

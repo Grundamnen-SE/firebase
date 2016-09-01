@@ -40,10 +40,16 @@ function isInArray(value, array) {
 }
 
 // Notification
+var notifyID;
 $(document).ready(function(){
   $("body").prepend('<div id="notification" class="disnon"></div>');
 });
 
 function notify(message) {
-  $("#notification").text(message).fadeIn(1000, function(){setTimeout(function(){$("#notification").fadeOut();}, 7*1000)});
+  stopNotify();
+  $("#notification").text(message).fadeIn(1000, function(){notifyID = setTimeout(function(){$("#notification").fadeOut();}, 7*1000)});
+}
+function stopNotify() {
+  window.clearTimeout(notifyID);
+  $("#notification").hide();
 }

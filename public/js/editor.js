@@ -39,6 +39,7 @@ function unloadEditor() {
   editorLoaded = false;
   $("#editor").hide();
   $("#login").show();
+  $("#name").text("");
   $("#editing-area").hide();
   window.user = null;
 }

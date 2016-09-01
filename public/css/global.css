@@ -72,3 +72,6 @@ a[href] {
 .login-with:hover {
   color: #396ECE;
 }
+.center {
+  text-align: center;
+}

@@ -25,9 +25,32 @@ auth.onAuthStateChanged(function(user) {
 function loadApprove() {
   $("#approve").show();
   $("#login").hide();
+  $("#name").text(loggedin_user.displayName ? loggedin_user.displayName:loggedin_user.email);
 }
 
 function unloadApprove() {
   $("#approve").hide();
   $("#login").show();
+}
+
+// Ladda ämnen som har "approved":false
+db.ref("elements").once('value').then(function(data){
+  setApprove(data.val());
+});
+db.ref("elements").on('value', function(data){
+  addApprove(data.val());
+});
+
+// Approve management
+var approveList
+function setApprove(data){
+  for (var key in data) {
+
+  }
+}
+function addApprove(data){
+
+}
+function removeApprove(data){
+
 }

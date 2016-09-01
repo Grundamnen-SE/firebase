@@ -57,3 +57,18 @@ a[href] {
   color: white;
   z-index: 10000;
 }
+.header {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.header span {
+  font-size: 16px;
+}
+.login-with {
+  color: #408EE2;
+  font-size: 20px;
+  cursor: pointer;
+}
+.login-with:hover {
+  color: #396ECE;
+}

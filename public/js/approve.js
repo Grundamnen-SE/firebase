@@ -34,11 +34,19 @@ function unloadApprove() {
 }
 
 // Ladda ämnen som har "approved":false
-db.ref("elements").once('value').then(function(data){
+db.ref("pending_approval").once('value').then(function(data){
   setApprove(data.val());
 });
-db.ref("elements").on('value', function(data){
+db.ref("pending_approval").on('child_added', function(data){
+  console.log("pending_approval child_added", data.val());
   addApprove(data.val());
+});
+db.ref("pending_approval").on('child_removed', function(data){
+  console.log("pending_approval child_removed", data.val());
+  removeApprove(data.val());
+});
+db.ref("pending_approval").on('child_changed', function(data){
+  // Do some function?
 });
 
 // Approve management
